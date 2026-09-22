@@ -1,0 +1,47 @@
+# ========== 构建输出目录 ==========
+# 忽略所有层级下名为 out 的文件夹（及其全部内容）
+out/
+# 忽略所有层级下以 out- 开头的文件夹
+out-*/
+build/
+build-*/
+cmake-build-*/
+
+# ========== Visual Studio ==========
+.vs/
+*.suo
+*.user
+*.aps
+*.ipch/
+*.db
+
+# ========== 编译产物 ==========
+*.obj
+*.o
+*.lo
+*.exe
+*.dll
+*.so
+*.dylib
+*.lib
+*.a
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.iobj
+*.ipdb
+
+# ========== CMake 生成物 ==========
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+*.ninja
+CMakeUserPresets.json
+
+# ========== IDE / 杂项 ==========
+.vscode/
+.idea/
+*.log
+*.tmp
