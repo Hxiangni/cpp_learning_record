@@ -153,3 +153,32 @@ void test_cmp() {
         std::cout << "任务共耗时 = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
     }
 }
+
+void test_packaged_task() {
+    const int RN_MAX = 1000;
+    Random rgen(0, RN_MAX);
+    std::vector<float> numbers(100, 0.0f);
+    //[&] = 按引用捕获所有在当前作用域内的变量
+    //lambda 用到了外部变量：rgen、RN_MAX
+    //同理[=]你猜猜啥意思喵~全部按值捕获
+    std::generate(numbers.begin(), numbers.end(), [&] {
+        return float(rgen()) / RN_MAX;
+        });
+    std::cout << "创建任务的线程Id:" << std::this_thread::get_id() << std::endl;
+
+    //返回值为float，参数为vector<float> 的左值引用
+    std::packaged_task<float(std::vector<float>&)> task(Compute);
+
+    std::cout << "***********************直接调用*******************" << std::endl;
+    std::future<float> result = task.get_future();
+    task(numbers);//task运行function对象
+    std::cout << "Result=" << result.get() << std::endl;
+
+    task.reset();
+
+    std::cout << "***********************使用线程调用*******************" << std::endl;
+    result = task.get_future();
+    std::thread t(std::move(task), std::ref(numbers));
+    std::cout << "Result=" << result.get() << std::endl;
+    t.join();
+}

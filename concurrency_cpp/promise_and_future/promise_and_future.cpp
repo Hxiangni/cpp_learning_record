@@ -15,7 +15,8 @@ int main()
     // 如果需要控制台输入也支持UTF‑8，再加这一句
     // SetConsoleCP(CP_UTF8);
 #endif
-
-    test_cmp();
+     
+    //test_cmp();
+    test_packaged_task();
 	return 0;
 }
